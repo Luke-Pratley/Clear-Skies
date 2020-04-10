@@ -1,30 +1,25 @@
-import optimusprimal.prox_operators as prox_operators
-import optimusprimal.grad_operators as grad_operators
+from astropy.io import fits 
 import optimusprimal.linear_operators as linear_operators
-import optimusprimal.primal_dual as primal_dual
-import numpy as np
+import clearskies
+from enum import Enum
 
+class algorithm(Enum):
+    constrained = 1
+    unconstrained = 2
 
-def constrained_solver(data, sigma, weights, psi, beta = 1e-3, options = {'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False}):
-    """
-    Solve constrained l1 regularization problem
-    """
-    phi = linear_operators.diag_matrix_operator(weights)
-    size = len(data)
-    epsilon = np.sqrt(size + 2. * np.sqrt(size)) * sigma
-    p = prox_operators.l2_ball(epsilon, data, phi)
-    p.beta = np.max(np.abs(weights))
-    h = prox_operators.l1_norm(np.max(np.abs(psi.dir_op(data))) * beta, psi)
-    return primal_dual.FBPD(phi.adj_op(data), options, None, h, p, None)
+def open_fits(image_file):
+    hdu_list = fits.open(image_file)
+    return hdu_list[0].data
+def open_header(image_file):
+    hdu_list = fits.open(image_file)
+    return hdu_list[0].header
 
-
-def unconstrained_solver(data, sigma, weights, psi, beta = 1e-3, options = {'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False}):
-    """
-    Solve unconstrained l1 regularization problem
-    """
-
-    phi = linear_operators.diag_matrix_operator(weights)
-    g = grad_operators.l2_norm(sigma, data, phi)
-    g.beta = np.max(np.abs(weights)) / sigma**2
-    h = prox_operators.l1_norm(beta, psi)
-    return primal_dual.FBPD(phi.adj_op(data), options, None, h, None, g)
+def solver(algo, image, sigma, weights, wav = ["dirac, db1, db2, db3, db4"], levels = 6, beta = 1e-3, options = {'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False}):
+    psi = linear_operators.dictionary(wav, levels, image.shape)
+    data = image * weights
+    if algo == algorithm.constrained:
+        return clearskies.core.constrained_solver(data,sigma, weights, psi, beta, options)
+    else if algo == algorithm.unconstrained:
+        return clearskies.core.unconstrained_solver(data,sigma, weights, psi, beta, options)
+    else:
+        raise ValueError("Algorithm not reconginized.")
