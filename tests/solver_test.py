@@ -1,5 +1,4 @@
 import sys
-sys.path.insert(0, '..')
 import numpy as np
 from clearskies import solver
 from astropy.io import fits
@@ -17,7 +16,7 @@ def open_header(image_file):
 
 
 def test_constrained():
-    input_file = "../data/lmc.fits"
+    input_file = "data/lmc.fits"
     x_true = open_fits(input_file)
     
     options = {'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False}
