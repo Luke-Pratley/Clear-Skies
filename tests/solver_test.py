@@ -34,6 +34,6 @@ def test_constrained():
     
     z, diag = solver.solver(solver.algorithm.l1_constrained, y, sigma, W, wav, levels, 1e-3, options)
     SNR = np.log10(np.sqrt(np.sum(np.abs(x_true)**2))/np.sqrt(np.sum(np.abs(x_true - z)**2))) * 20.
-    assert(SNR > INSR)
+    assert(SNR > ISNR)
     size = z.shape[0] * z.shape[1]
     assert(np.linalg.norm(W * z - y) < np.sqrt(size + 2 * np.sqrt(size)) * sigma)
