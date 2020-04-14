@@ -9,3 +9,7 @@ However, when the true signal has correlated and non Gaussian structure, l1 regu
 Clear-Skies aims to bring these methods to astronomical images.
 
 This code is built using [Optimus Primal](https://github.com/Luke-Pratley/Optimus-Primal) to apply convex optimization algorithms in deniosing.
+
+## Requirements
+- Astropy
+- [Optimus Primal](https://github.com/Luke-Pratley/Optimus-Primal)
