@@ -23,6 +23,7 @@ setuptools.setup(
           'numpy',
           'PyWavelets',
           'optimiusprimal',
+          'pytest',
           'astropy'
       ]
 )
