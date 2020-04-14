@@ -26,7 +26,7 @@ jobs:
       install:
         - pip install pytest-cov codecov
         - pip install -i https://test.pypi.org/simple/ optimiusprimal
-        - pip install git@github.com:Luke-Pratley/Optimus-Primal.git#egg=optimiusprimal
+        - pip -m install git@github.com:Luke-Pratley/Optimus-Primal.git@174efb0d1ffbe43065acc8f7e2002a16548eac64
         - python setup.py build
         - python setup.py install
       script: 
