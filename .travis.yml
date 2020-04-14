@@ -6,7 +6,6 @@ jobs:
       install:
         - pip install pywavelets
         - pip install pytest
-        - pip install git@github.com:Luke-Pratley/Optimus-Primal.git@174efb0d1ffbe43065acc8f7e2002a16548eac64
         - pip install -e git://github.com/Luke-Pratley/Optimus-Primal.git@master#egg=optimusprimal
         - python setup.py build
         - python setup.py install

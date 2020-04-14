@@ -22,7 +22,8 @@ setuptools.setup(
     install_requires=[
           'numpy',
           'PyWavelets',
-          'optimiusprimal'
+          'optimiusprimal',
+          'astropy'
       ]
 )
 
