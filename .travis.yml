@@ -4,8 +4,8 @@ jobs:
       python:
         - "3.6"
       install:
-        - pip install pywavelets
         - pip install pytest
+        - pip install -e git://github.com/Luke-Pratley/Optimus-Primal.git@master#egg=optimusprimal
         - python setup.py build
         - python setup.py install
   # - "pypy3"  # currently Python 3.6.1
@@ -15,8 +15,8 @@ jobs:
       python:
         - "3.8"
       install:
-        - pip install pywavelets
         - pip install pytest
+        - pip install -e git://github.com/Luke-Pratley/Optimus-Primal.git@master#egg=optimusprimal
         - python setup.py build
         - python setup.py install
       script: pytest -v tests/*.py
@@ -25,9 +25,7 @@ jobs:
       language: python
       install:
         - pip install pytest-cov codecov
-        - pip install -i https://test.pypi.org/simple/ optimiusprimal
-        - pip install git@github.com:Luke-Pratley/Optimus-Primal.git
-        - python setup.py build
+        - pip install -e git://github.com/Luke-Pratley/Optimus-Primal.git@master#egg=optimusprimal
         - python setup.py install
       script: 
         - py.test tests/*.py  --cov-report term --cov=clearskies --collect-only 
