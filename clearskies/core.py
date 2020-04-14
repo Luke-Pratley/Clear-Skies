@@ -5,12 +5,12 @@ import optimusprimal.primal_dual as primal_dual
 import numpy as np
 
 
-def constrained_solver(data, sigma, weights, psi, beta = 1e-3, options = {'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False}):
+def l1_constrained_solver(data, sigma, weights, psi, beta = 1e-3, options = {'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False}):
     """
     Solve constrained l1 regularization problem
     """
     phi = linear_operators.diag_matrix_operator(weights)
-    size = len(data)
+    size = data.shape[0] * data.shape[1]
     epsilon = np.sqrt(size + 2. * np.sqrt(size)) * sigma
     p = prox_operators.l2_ball(epsilon, data, phi)
     p.beta = np.max(np.abs(weights))**2
@@ -18,7 +18,7 @@ def constrained_solver(data, sigma, weights, psi, beta = 1e-3, options = {'tol':
     return primal_dual.FBPD(phi.adj_op(data), options, None, h, p, None)
 
 
-def unconstrained_solver(data, sigma, weights, psi, beta = 1e-3, options = {'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False}):
+def l1_unconstrained_solver(data, sigma, weights, psi, beta = 1e-3, options = {'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False}):
     """
     Solve unconstrained l1 regularization problem
     """
