@@ -28,3 +28,14 @@ def l1_unconstrained_solver(data, sigma, weights, psi, beta = 1e-3, options = {'
     g.beta = np.max(np.abs(weights))**2 / sigma**2
     h = prox_operators.l1_norm(beta, psi)
     return primal_dual.FBPD(phi.adj_op(data), options, None, h, None, g)
+
+def l2_unconstrained_solver(data, sigma, weights, psi, sigma_signal = 1e-3, options = {'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False}):
+    """
+    Solve unconstrained l1 regularization problem
+    """
+
+    phi = linear_operators.diag_matrix_operator(weights)
+    g = grad_operators.l2_norm(sigma, data, phi)
+    g.beta = np.max(np.abs(weights))**2 / sigma**2
+    h = prox_operators.l2_square_norm(sigma_signal, psi)
+    return primal_dual.FBPD(phi.adj_op(data), options, None, h, None, g)
