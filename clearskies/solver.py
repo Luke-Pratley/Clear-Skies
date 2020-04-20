@@ -10,9 +10,10 @@ class algorithm(Enum):
     l2_unconstrained = 2
 
 
-def solver(algo, image, sigma, weights, wav=["dirac, db1, db2, db3, db4"], levels=6, beta=1e-3, options={'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False}):
+def solver(algo, image, sigma, weights, wav=["dirac, db1, db2, db3, db4"], levels=6, beta=1e-3, options={'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False, "positivity": False}):
     psi = linear_operators.dictionary(wav, levels, image.shape)
     data = image * weights
+    print(weights)
     if algo == algorithm.l1_constrained:
         return clearskies.core.l1_constrained_solver(data, sigma, weights, psi, beta, options)
     if algo == algorithm.l1_unconstrained:
