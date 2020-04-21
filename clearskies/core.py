@@ -11,9 +11,10 @@ def l1_constrained_solver(data, sigma, weights, psi, beta = 1e-3, options = {'to
     """
     phi = linear_operators.diag_matrix_operator(weights)
     size = len(np.ravel(data))
-    epsilon = np.sqrt(size + 2. * np.sqrt(size)) * sigma
+    epsilon = np.sqrt(size + 2. * np.sqrt(4 * size)) * sigma
     p = prox_operators.l2_ball(epsilon, data, phi)
     p.beta = np.max(np.abs(weights))**2
+    f = None
     if options['real'] == True:
         if options["positivity"] == True:
             f = prox_operators.positive_prox()
@@ -32,6 +33,7 @@ def l1_unconstrained_solver(data, sigma, weights, psi, beta = 1e-3, options = {'
     g = grad_operators.l2_norm(sigma, data, phi)
     g.beta = np.max(np.abs(weights))**2 / sigma**2
     h = prox_operators.l1_norm(beta, psi)
+    f = None
     if options['real'] == True:
         if options["positivity"] == True:
             f = prox_operators.positive_prox()
@@ -48,6 +50,7 @@ def l2_unconstrained_solver(data, sigma, weights, psi, sigma_signal = 1e-3, opti
     g = grad_operators.l2_norm(sigma, data, phi)
     g.beta = np.max(np.abs(weights))**2 / sigma**2
     h = prox_operators.l2_square_norm(sigma_signal, psi)
+    f = None
     if options['real'] == True:
         if options["positivity"] == True:
             f = prox_operators.positive_prox()
