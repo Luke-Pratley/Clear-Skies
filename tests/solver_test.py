@@ -23,7 +23,7 @@ def test_constrained():
     
     options = {'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False, 'real': False, 'positivity': False}
     ISNR = 30.
-    sigma = 10**(-ISNR/20.) * np.sqrt(np.sum(np.abs(x_true)**2)/(x_true.shape[0] * x_true.shape[1]))
+    sigma = 10**(-ISNR/20.) * np.sqrt(np.sum(np.abs(x_true)**2)/np.sqrt(x_true.shape[0] * x_true.shape[1]))
     width, height = x_true.shape
 
     W = np.ones(x_true.shape)
