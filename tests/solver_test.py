@@ -42,5 +42,5 @@ def test_constrained():
     SNR = np.log10(np.sqrt(np.sum(np.abs(x_true)**2))/np.sqrt(np.sum(np.abs(x_true - z)**2))) * 20.
     assert(SNR > ISNR)
     size = z.shape[0] * z.shape[1]
-    assert(np.linalg.norm(W * z - y) < np.sqrt(size + 2 * np.sqrt(size)) * sigma)
+    assert(np.linalg.norm(W * z - y) < np.sqrt(size + 2 * np.sqrt(size)) * sigma * 1.1)
     assert(np.all(np.isclose(z, z_expected)))
