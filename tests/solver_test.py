@@ -20,8 +20,8 @@ def open_header(image_file):
 def test_constrained():
     input_file = "data/lmc.fits"
     x_true = open_fits(input_file)
-    x_true = x_true[:128,:128]
-    options = {'tol': 1e-3, 'iter': 5000, 'update_iter': 50, 'record_iters': False, 'real': False, 'positivity': False}
+    x_true = x_true[:128, :128]
+    options = {'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False, 'real': False, 'positivity': False}
     ISNR = 30.
     sigma = 10**(-ISNR/20.) * np.sqrt(np.sum(np.abs(x_true)**2)/(x_true.shape[0] * x_true.shape[1]))
     width, height = x_true.shape
