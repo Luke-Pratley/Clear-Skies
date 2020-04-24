@@ -21,9 +21,9 @@ def test_constrained():
     input_file = "data/lmc.fits"
     x_true = open_fits(input_file)
     
-    options = {'tol': 1e-3, 'iter': 5000, 'update_iter': 50, 'record_iters': False, 'real': False, 'positivity': False}
+    options = {'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False, 'real': False, 'positivity': False}
     ISNR = 30.
-    sigma = 10**(-ISNR/20.) * np.sqrt(np.sum(np.abs(x_true)**2)/np.sqrt(x_true.shape[0] * x_true.shape[1]))
+    sigma = 10**(-ISNR/20.) * np.sqrt(np.sum(np.abs(x_true)**2)/(x_true.shape[0] * x_true.shape[1]))
     width, height = x_true.shape
 
     W = np.ones(x_true.shape)
@@ -36,8 +36,8 @@ def test_constrained():
     psi = linear_operators.dictionary(wav, levels, y.shape)
     data = y * W
     
-    z, diag = solver.solver(solver.algorithm.l1_constrained, y, sigma, W, wav, levels, 1e-3, options)
-    z_expected, diag_expected = core.l1_constrained_solver(data, sigma, W, psi, 1e-3, options)
+    z, diag = solver.solver(solver.algorithm.l1_constrained, y, sigma, W, wav, levels, 1e-2, options)
+    z_expected, diag_expected = core.l1_constrained_solver(data, sigma, W, psi, 1e-2, options)
 
     SNR = np.log10(np.sqrt(np.sum(np.abs(x_true)**2))/np.sqrt(np.sum(np.abs(x_true - z)**2))) * 20.
     assert(SNR > ISNR)
