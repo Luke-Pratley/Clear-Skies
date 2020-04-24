@@ -3,6 +3,7 @@ import optimusprimal.grad_operators as grad_operators
 import optimusprimal.linear_operators as linear_operators
 import optimusprimal.primal_dual as primal_dual
 import numpy as np
+import logging
 
 
 def l1_constrained_solver(data, sigma, weights, psi, beta = 1e-3, options = {'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False, 'positivity': False, 'real': False}):
@@ -11,7 +12,7 @@ def l1_constrained_solver(data, sigma, weights, psi, beta = 1e-3, options = {'to
     """
     phi = linear_operators.diag_matrix_operator(weights)
     size = len(np.ravel(data))
-    epsilon = np.sqrt(size + 2. * np.sqrt(4 * size)) * sigma
+    epsilon = np.sqrt(2 * size + 2. * np.sqrt(4 * size)) * sigma
     p = prox_operators.l2_ball(epsilon, data, phi)
     p.beta = np.max(np.abs(weights))**2
     f = None
