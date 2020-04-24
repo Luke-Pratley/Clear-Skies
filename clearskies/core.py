@@ -12,7 +12,7 @@ def l1_constrained_solver(data, sigma, weights, psi, beta = 1e-3, options = {'to
     """
     phi = linear_operators.diag_matrix_operator(weights)
     size = len(np.ravel(data))
-    epsilon = np.sqrt(2 * size + 2. * np.sqrt(4 * size)) * sigma
+    epsilon = np.sqrt(size + 2 * np.sqrt(2 * size)) * sigma
     p = prox_operators.l2_ball(epsilon, data, phi)
     p.beta = np.max(np.abs(weights))**2
     f = None
