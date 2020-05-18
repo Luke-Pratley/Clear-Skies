@@ -37,7 +37,7 @@ def test_constrained():
     data = y
     warm_start = data   
     z, diag = solver.solver(solver.algorithm.l1_constrained, y, sigma, W, wav, levels, 1e-2, options)
-    z_expected, diag_expected = core.l1_constrained_solver(data, sigma, W, psi, 1e-2, options)
+    z_expected, diag_expected = core.l1_constrained_solver(data, warm_start, sigma, W, psi, 1e-2, options)
 
     SNR = np.log10(np.sqrt(np.sum(np.abs(x_true)**2))/np.sqrt(np.sum(np.abs(x_true - z)**2))) * 20.
     assert(SNR > ISNR)
