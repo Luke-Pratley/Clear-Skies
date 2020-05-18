@@ -34,10 +34,10 @@ def test_constrained():
     wav = ["dirac", "db1", "db2", "db3", "db4", "db5", "db6", "db7", "db8"]
     levels = 5
     psi = linear_operators.dictionary(wav, levels, y.shape)
-    data = y * W
-    
+    data = y
+    warm_start = data   
     z, diag = solver.solver(solver.algorithm.l1_constrained, y, sigma, W, wav, levels, 1e-2, options)
-    z_expected, diag_expected = core.l1_constrained_solver(data, sigma, W, psi, 1e-2, options)
+    z_expected, diag_expected = core.l1_constrained_solver(data, warm_start, sigma, W, psi, 1e-2, options)
 
     SNR = np.log10(np.sqrt(np.sum(np.abs(x_true)**2))/np.sqrt(np.sum(np.abs(x_true - z)**2))) * 20.
     assert(SNR > ISNR)
