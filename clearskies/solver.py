@@ -12,10 +12,10 @@ class algorithm(Enum):
 
 logger = logging.getLogger('Clear Skies')
 
-def solver(algo, image, sigma, weights, wav=["dirac, db1, db2, db3, db4"], levels=6, beta=1e-3, options={'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False, "positivity": False},  warm_start = None):
+def solver(algo, image, sigma, weights, wav=["dirac, db1, db2, db3, db4"], levels=6, beta=1e-3, options={'tol': 1e-5, 'iter': 5000, 'update_iter': 50, 'record_iters': False, "positivity": False},  warm_start = None, axes = None):
     logger.info("Using wavelets %s with %s levels", wav, levels)
     logger.info("Using an estimated noise level of %s (weighted image units, i.e. Jy/Beam)", sigma)
-    psi = linear_operators.dictionary(wav, levels, image.shape)
+    psi = linear_operators.dictionary(wav, levels, image.shape, axes)
     data = image * weights
     if(warm_start is None):
         warm_start = data
