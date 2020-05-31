@@ -32,8 +32,8 @@ def test_constrained():
     
     
     wav = ["dirac", "db1", "db2", "db3", "db4", "db5", "db6", "db7", "db8"]
-    levels = 5
-    psi = linear_operators.dictionary(wav, levels, y.shape)
+    levels = 2
+    psi = linear_operators.dictionary(wav, levels, y.shape, None)
     data = y
     warm_start = data   
     z, diag = solver.solver(solver.algorithm.l1_constrained, y, sigma, W, wav, levels, 1e-2, options)
