@@ -12,6 +12,8 @@ jobs:
 
     - name: codecov
       language: python
+      python:
+        - "3.8"
       install:
         - pip install pytest-cov codecov
         - pip install -e git://github.com/Luke-Pratley/Optimus-Primal.git@master#egg=optimusprimal
@@ -24,6 +26,8 @@ jobs:
     
     - name: lint-check
       language: python
+      python:
+        - "3.8"
       install:
         - pip install --upgrade autopep8
       script: 
