@@ -2,17 +2,6 @@ jobs:
   include:
     - language: python
       python:
-        - "3.6"
-      install:
-        - pip install pytest
-        - pip install -e git://github.com/Luke-Pratley/Optimus-Primal.git@master#egg=optimusprimal
-        - python setup.py build
-        - python setup.py install
-  # - "pypy3"  # currently Python 3.6.1
-      script: pytest -v tests/*.py
-
-    - language: python
-      python:
         - "3.8"
       install:
         - pip install pytest
